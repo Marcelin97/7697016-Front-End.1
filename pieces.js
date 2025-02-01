@@ -1,4 +1,4 @@
-import {ajoutListenerEnvoyerAvis, ajoutListenersAvis} from "./avis.js";
+import {afficherAvis, ajoutListenerEnvoyerAvis, ajoutListenersAvis} from "./avis.js";
 
 //Récupération des pièces eventuellement stockées dans le localStorage
 let pieces = window.localStorage.getItem('pieces');
@@ -59,6 +59,19 @@ function genererPieces(pieces){
 }
 
 genererPieces(pieces);
+
+
+// boucle qui parcourt les pièces pour récupérer leurs valeurs éventuellement stocké dans le localStorage
+for(let i = 0; i < pieces.length; i++){
+    const id = pieces[i].id;
+    const avisJSON = window.localStorage.getItem(`avis-piece-${id}`);
+    const avis = JSON.parse(avisJSON);
+
+    if(avis !== null){
+        const pieceElement = document.querySelector(`article[data-id="${id}"]`);
+        afficherAvis(pieceElement, avis)
+    }
+}
 
 //gestion des bouttons
 const boutonTrier = document.querySelector(".btn-trier");
